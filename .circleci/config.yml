@@ -1,12 +1,12 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@5.0.2
-  browser-tools: circleci/browser-tools@1.2.3
+  node: circleci/node@5.1.0
+  browser-tools: circleci/browser-tools@1.4.1
 
 defaults: &defaults
   docker:
-    - image: cimg/node:16.14-browsers
+    - image: cimg/node:18.16-browsers
   working_directory: ~/AriaNg
 
 jobs:
@@ -20,10 +20,12 @@ jobs:
       - browser-tools/install-chromedriver
       - run:
           name: Install global dependencies
-          command: sudo npm install -g gulp
+          command: sudo npm install -g gulp-cli
       - run:
           name: Build project
-          command: gulp clean build
+          command: |
+            npm run build
+            gulp clean build
       - persist_to_workspace:
           root: ~/AriaNg
           paths:
